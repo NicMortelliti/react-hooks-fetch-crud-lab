@@ -9,6 +9,17 @@ function QuestionList({ questions, setQuestions }) {
     setQuestions(updatedQuestions);
   }
 
+  function handleAnswerUpdate(updatedQuestion) {
+    const updatedQuestions = questions.map(question => {
+      if (question.id === updatedQuestion.id) {
+        return updatedQuestion;
+      } else {
+        return question;
+      }
+    });
+    setQuestions(updatedQuestions);
+  }
+
   return (
     <section>
       <h1>Quiz Questions</h1>
@@ -18,6 +29,7 @@ function QuestionList({ questions, setQuestions }) {
             key={question.id}
             question={question}
             onDeleteItem={handleDeleteItem}
+            handleUpdateItem={handleAnswerUpdate}
           />
         ))}
       </ul>

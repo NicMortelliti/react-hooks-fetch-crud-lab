@@ -1,6 +1,6 @@
 import React from "react";
 
-function QuestionItem({ question, setQuestions, onDeleteItem }) {
+function QuestionItem({ question, onDeleteItem, handleUpdateItem }) {
   const { id, prompt, answers, correctIndex } = question;
 
   const options = answers.map((answer, index) => (
@@ -18,14 +18,13 @@ function QuestionItem({ question, setQuestions, onDeleteItem }) {
   }
 
   function handleChange(event) {
-    const newCorrectAnswerID = event.target.value;
-    fetch(`http://localhost:4000/questions/${newCorrectAnswerID}`, {
+    fetch(`http://localhost:4000/questions/${question.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newCorrectAnswerID),
+      body: JSON.stringify({ correctIndex: event.target.value }),
     })
       .then(r => r.json())
-      .then(() => setQuestions());
+      .then(updatedItem => handleUpdateItem(updatedItem));
   }
 
   return (
